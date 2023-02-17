@@ -52,9 +52,9 @@ export const useFormStore = defineStore('form', () => {
     form.value = newForm
     saveToLocalStorage()
   }
-  const clear = () => {
+  const clear = (resetType = true) => {
     form.value = {
-      type: 'feat',
+      type: resetType ? 'feat' : form.value.type,
       scope: '',
       subject: '',
       body: '',

@@ -143,7 +143,7 @@ const preview = computed(() => {
       header =
         emojiType === 'symbol'
           ? `${emoji}${scope ? '(' + scope + '):' : ''}`
-          : `${emoji}${scope ? '(' + scope + '):' : ''}`
+          : `${emoji}${scope ? ' (' + scope + '):' : ''}`
       break
     case '4':
       header = `${type}${scope ? '(' + scope + ')' : ''}: ${emoji}`
@@ -175,7 +175,7 @@ const copy = () => {
   document.body.removeChild(textArea)
 
   MessagePlugin.success('复制成功')
-  onReset()
+  store.clear(false)
   subjectInput.value.focus()
 }
 // 监听Ctrl+C键
