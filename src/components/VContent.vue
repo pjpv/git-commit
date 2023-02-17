@@ -85,7 +85,7 @@
         </t-space>
       </div>
     </div>
-    <div class="v-content-wrapper" style="margin-top: 20px">
+    <div class="v-content-wrapper preview" style="">
       <div class="v-content-wrapper-row">
         <t-textarea
           v-model="preview"
@@ -198,11 +198,16 @@ document.addEventListener('keydown', function (event) {
     padding: 20px;
     box-shadow: 1px 2px 7px #0000006b;
     border-radius: 6px;
-
+    &.preview {
+      margin-top: 20px
+    }
     &-row {
       display: flex;
       vertical-align: top;
       margin-bottom: 10px;
+      &:last-of-type {
+        margin-bottom: 0;
+      }
       &-left {
         width: 32%;
         display: inline-block;
@@ -213,6 +218,31 @@ document.addEventListener('keydown', function (event) {
         flex: 1;
         display: inline-block;
         vertical-align: top;
+      }
+    }
+  }
+}
+</style>
+
+<style lang="less">
+.home.chrome-extension {
+  .v-content {
+    &-wrapper {
+      padding: 10px;
+      border-radius: 0 0 6px 6px;
+
+      &:last-of-type {
+        border-radius: 6px 6px 0 0;
+      }
+
+      &.preview {
+        margin-top: 10px
+      }
+      &-row {
+        margin-bottom: 10px;
+        &:last-of-type {
+          margin-bottom: 0;
+        }
       }
     }
   }

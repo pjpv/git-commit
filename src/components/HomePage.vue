@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div :class="className">
     <VContent ></VContent>
   </div>
 </template>
@@ -7,9 +7,13 @@
 <script setup lang="ts">
 import VContent from '@/components/VContent.vue'
 
+let className = 'home'
+if (location.protocol === 'chrome-extension:') {
+  className += ' chrome-extension'
+}
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .home {
   filter: none !important;
   width: 800px;
@@ -19,5 +23,8 @@ import VContent from '@/components/VContent.vue'
   height: inherit;
   color: #e8e8e8;
   font-size: 14px;
+  &.chrome-extension {
+    padding: 0;
+  }
 }
 </style>
