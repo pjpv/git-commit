@@ -27,7 +27,7 @@ export const useFormStore = defineStore('form', () => {
   const saveToLocalStorage = throttle(() => {
     localStorage.setItem(STORE_KEY, JSON.stringify(form.value))
     localStorage.setItem(STORE_STYLE_KEY, style.value)
-  }, 300)
+  }, 100)
   const getFromLocalStorage = () => {
     try {
       const data = localStorage.getItem(STORE_KEY)

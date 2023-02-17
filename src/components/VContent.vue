@@ -177,6 +177,11 @@ const copy = () => {
   MessagePlugin.success('复制成功')
   store.clear(false)
   subjectInput.value.focus()
+  if (location.protocol === 'chrome-extension:') {
+    setTimeout(() => {
+      window.close()
+    }, 110)
+  }
 }
 // 监听Ctrl+C键
 document.addEventListener('keydown', function (event) {
