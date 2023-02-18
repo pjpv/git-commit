@@ -10,12 +10,21 @@ export interface GitCommitForm {
   footer: string
   emoji: string
 }
+export interface ShortcutKey {
+  altKey: boolean
+  ctrlKey: boolean
+  metaKey: boolean
+  shiftKey: boolean
+  keyCode: number
+  text: string
+}
 
 export const useFormStore = defineStore('form', () => {
   const STORE_KEY = 'git-commit-form'
   const STORE_STYLE_KEY = 'git-commit-form-style'
   const STORE_AUTO_CLOSE_KEY = 'git-commit-form-auto-close'
   const STORE_COPY_CLEAR_KEY = 'git-commit-form-copy-clear'
+  const STORE_SHORTCUT_KEY = 'git-commit-form-shortcut-key'
   const form = ref({
     type: 'feat',
     scope: '',
@@ -27,11 +36,20 @@ export const useFormStore = defineStore('form', () => {
   const style = ref('1')
   const autoClose = ref(true)
   const copyClear = ref(false)
+  const shortcutKey = ref({
+    altKey: false,
+    ctrlKey: true,
+    metaKey: false,
+    shiftKey: false,
+    keyCode: 67,
+    text: 'Ctrl + C',
+  } as ShortcutKey)
 
   const saveToLocalStorage = throttle(() => {
     localStorage.setItem(STORE_KEY, JSON.stringify(form.value))
     localStorage.setItem(STORE_AUTO_CLOSE_KEY, autoClose.value ? '1' : '0')
     localStorage.setItem(STORE_COPY_CLEAR_KEY, copyClear.value ? '1' : '0')
+    localStorage.setItem(STORE_SHORTCUT_KEY, JSON.stringify(shortcutKey.value))
     // localStorage.setItem(STORE_STYLE_KEY, style.value)
   }, 100)
   const getFromLocalStorage = () => {
@@ -73,6 +91,23 @@ export const useFormStore = defineStore('form', () => {
     } catch (e) {
       console.error(e)
     }
+    try {
+      const data = localStorage.getItem(STORE_SHORTCUT_KEY)
+      if (data) {
+        shortcutKey.value = JSON.parse(data)
+      } else {
+        shortcutKey.value = {
+          altKey: false,
+          ctrlKey: true,
+          metaKey: false,
+          shiftKey: false,
+          keyCode: 67,
+          text: 'Ctrl + C',
+        }
+      }
+    } catch (e) {
+      console.error(e)
+    }
   }
   const updateForm = (newForm: GitCommitForm) => {
     form.value = newForm
@@ -96,6 +131,7 @@ export const useFormStore = defineStore('form', () => {
     style,
     autoClose,
     copyClear,
+    shortcutKey,
     saveToLocalStorage,
     getFromLocalStorage,
     updateForm,
