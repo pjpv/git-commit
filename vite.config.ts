@@ -9,8 +9,8 @@ export default defineConfig({
   plugins: [vue(), vueJsx()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
   },
   css: {
     preprocessorOptions: {
@@ -21,9 +21,10 @@ export default defineConfig({
       },
     },
   },
+  base: './',
   server: {
     host: '0.0.0.0',
     port: 5174,
     open: false,
-  }
+  },
 })
