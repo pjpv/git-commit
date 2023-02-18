@@ -1,6 +1,6 @@
 <template>
   <div :class="className">
-    <VContent ></VContent>
+    <VContent></VContent>
   </div>
 </template>
 
@@ -24,6 +24,7 @@ if (location.protocol === 'chrome-extension:') {
   color: #e8e8e8;
   font-size: 14px;
   &.chrome-extension {
+    max-width: 600px;
     padding: 0;
   }
 }

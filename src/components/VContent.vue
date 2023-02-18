@@ -428,7 +428,8 @@ document.addEventListener('copy', (event: any) => {
       }
 
       &-left {
-        width: 32%;
+        //width: 42%;
+        width: 320px;
         display: inline-block;
         vertical-align: top;
         margin-right: 6px;
@@ -468,6 +469,9 @@ document.addEventListener('copy', (event: any) => {
 
         &:last-of-type {
           margin-bottom: 0;
+        }
+        &-left {
+          //width: 320px;
         }
       }
     }
