@@ -9,6 +9,7 @@ import {
   Radio as TRadio,
   RadioGroup as TRadioGroup,
   RadioButton as TRadioButton,
+  Checkbox as TCheckbox,
   Space as TSpace,
   Switch as TSwitch,
   Form as TForm,
@@ -31,6 +32,7 @@ app.use(TTextarea)
 app.use(TRadio)
 app.use(TRadioGroup)
 app.use(TRadioButton)
+app.use(TCheckbox)
 app.use(TSpace)
 app.use(TSwitch)
 app.use(TForm)

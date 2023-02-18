@@ -14,6 +14,8 @@ export interface GitCommitForm {
 export const useFormStore = defineStore('form', () => {
   const STORE_KEY = 'git-commit-form'
   const STORE_STYLE_KEY = 'git-commit-form-style'
+  const STORE_AUTO_CLOSE_KEY = 'git-commit-form-auto-close'
+  const STORE_COPY_CLEAR_KEY = 'git-commit-form-copy-clear'
   const form = ref({
     type: 'feat',
     scope: '',
@@ -23,10 +25,14 @@ export const useFormStore = defineStore('form', () => {
     emoji: 'symbol',
   } as GitCommitForm)
   const style = ref('1')
+  const autoClose = ref(true)
+  const copyClear = ref(false)
 
   const saveToLocalStorage = throttle(() => {
     localStorage.setItem(STORE_KEY, JSON.stringify(form.value))
-    localStorage.setItem(STORE_STYLE_KEY, style.value)
+    localStorage.setItem(STORE_AUTO_CLOSE_KEY, autoClose.value ? '1' : '0')
+    localStorage.setItem(STORE_COPY_CLEAR_KEY, copyClear.value ? '1' : '0')
+    // localStorage.setItem(STORE_STYLE_KEY, style.value)
   }, 100)
   const getFromLocalStorage = () => {
     try {
@@ -43,6 +49,26 @@ export const useFormStore = defineStore('form', () => {
         style.value = data
       } else {
         style.value = '1'
+      }
+    } catch (e) {
+      console.error(e)
+    }
+    try {
+      const data = localStorage.getItem(STORE_AUTO_CLOSE_KEY)
+      if (data) {
+        autoClose.value = data === '1'
+      } else {
+        autoClose.value = true
+      }
+    } catch (e) {
+      console.error(e)
+    }
+    try {
+      const data = localStorage.getItem(STORE_COPY_CLEAR_KEY)
+      if (data) {
+        copyClear.value = data === '1'
+      } else {
+        copyClear.value = false
       }
     } catch (e) {
       console.error(e)
@@ -68,6 +94,8 @@ export const useFormStore = defineStore('form', () => {
   return {
     form,
     style,
+    autoClose,
+    copyClear,
     saveToLocalStorage,
     getFromLocalStorage,
     updateForm,

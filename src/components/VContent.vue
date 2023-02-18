@@ -17,7 +17,7 @@
         <div class="v-content-wrapper-row-right">
           <t-input
             v-model="store.form.scope"
-            placeholder="影响范围（可选）"
+            placeholder="影響範圍（可選）"
             :clearable="true"
             size="large"
             class="input"
@@ -26,23 +26,23 @@
         </div>
       </div>
       <div class="v-content-wrapper-row">
-        <div class="v-content-wrapper-row-left">
-          <t-select
-            v-model="store.form.emoji"
-            size="large"
-            showArrow
-            class="input"
-          >
-            <t-option label="Emoji类型：文字" value="text" />
-            <t-option label="Emoji类型：符号" value="symbol" />
-          </t-select>
-        </div>
+        <!--<div class="v-content-wrapper-row-left">-->
+        <!--  <t-select-->
+        <!--    v-model="store.form.emoji"-->
+        <!--    size="large"-->
+        <!--    showArrow-->
+        <!--    class="input"-->
+        <!--  >-->
+        <!--    <t-option label="Emoji类型：文字" value="text" />-->
+        <!--    <t-option label="Emoji类型：符号" value="symbol" />-->
+        <!--  </t-select>-->
+        <!--</div>-->
         <div class="v-content-wrapper-row-right">
           <t-input
             ref="subjectInput"
             v-model="store.form.subject"
             :clearable="true"
-            placeholder="简短描述（必填）"
+            placeholder="簡短描述（必填）"
             size="large"
             class="input"
           >
@@ -54,7 +54,7 @@
           v-model="store.form.body"
           :autosize="{ minRows: 4, maxRows: 4 }"
           :clearable="true"
-          placeholder="详细描述（可选）"
+          placeholder="詳細描述（可選）"
           size="large"
           class="input"
         />
@@ -64,24 +64,26 @@
           v-model="store.form.footer"
           :autosize="{ minRows: 3, maxRows: 3 }"
           :clearable="true"
-          placeholder="关联issue or 不兼容变动（可选）"
+          placeholder="關聯issue or 不兼容變動（可選）"
           size="large"
           class="input"
         />
       </div>
       <div class="v-content-wrapper-row" style="justify-content: space-between;align-items: center;">
         <t-space>
-          <t-radio-group v-model="store.style" variant="primary-filled">
-            <t-radio-button value="1">样式一</t-radio-button>
-            <t-radio-button value="2">样式二</t-radio-button>
-            <t-radio-button value="3">样式三</t-radio-button>
-            <t-radio-button value="4">样式四</t-radio-button>
-          </t-radio-group>
+          <!--<t-radio-group v-model="store.style" variant="primary-filled">-->
+          <!--  <t-radio-button value="1">样式一</t-radio-button>-->
+          <!--  <t-radio-button value="2">样式二</t-radio-button>-->
+          <!--  <t-radio-button value="3">样式三</t-radio-button>-->
+          <!--  <t-radio-button value="4">样式四</t-radio-button>-->
+          <!--</t-radio-group>-->
+          <t-checkbox v-if="inExtension" v-model="store.autoClose" label="複製後關閉" class="checkbox" />
+          <t-checkbox v-model="store.copyClear" label="複製後清空" class="checkbox" />
         </t-space>
 
         <t-space style="float: right;">
           <t-button theme="warning" @click="onReset">重置</t-button>
-          <t-button theme="success" @click="copy">复制</t-button>
+          <t-button theme="success" @click="copy">複製</t-button>
         </t-space>
       </div>
     </div>
@@ -105,20 +107,21 @@ import { MessagePlugin } from 'tdesign-vue-next'
 import { useFormStore } from '@/stores/list'
 // const TypeKeys = ['feat', 'fix', 'docs', 'style', 'refactor', 'perf', 'test', 'build', 'ci', 'chore', 'revert']
 const TypeKeys = [
-  { label: 'feat', value: 'feat', emoji: '✨', description: '新增功能', emojiText: ':sparkles:' },
-  { label: 'fix', value: 'fix', emoji: '🐛', description: '修复 bug', emojiText: ':bug:' },
-  { label: 'docs', value: 'docs', emoji: '📝', description: '文档变更', emojiText: ':memo:' },
-  { label: 'style', value: 'style', emoji: '🎨', description: '代码格式', emojiText: ':art:' },
-  { label: 'refactor', value: 'refactor', emoji: '♻️', description: '重构代码', emojiText: ':recycle:' },
-  { label: 'perf', value: 'perf', emoji: '⚡️', description: '性能优化', emojiText: ':zap:' },
-  { label: 'test', value: 'test', emoji: '✅', description: '测试', emojiText: ':white_check_mark:' },
-  { label: 'build', value: 'build', emoji: '🚀', description: '构建', emojiText: ':rocket:' },
-  { label: 'ci', value: 'ci', emoji: '👷', description: '持续集成', emojiText: ':construction_worker:' },
-  { label: 'chore', value: 'chore', emoji: '🗯', description: '其他', emojiText: ':speech_balloon:' },
-  { label: 'revert', value: 'revert', emoji: '⏪️', description: '回滚', emojiText: ':rewind:' },
+  { label: 'feat', value: 'feat', emoji: '✨', description: '新功能', emojiText: ':sparkles:' },
+  { label: 'fix', value: 'fix', emoji: '🐛', description: '修復 bug', emojiText: ':bug:' },
+  { label: 'docs', value: 'docs', emoji: '📝', description: '文檔變更', emojiText: ':memo:' },
+  { label: 'style', value: 'style', emoji: '🎨', description: '無關代碼的格式', emojiText: ':art:' },
+  { label: 'refactor', value: 'refactor', emoji: '♻️', description: '重構代碼', emojiText: ':recycle:' },
+  { label: 'perf', value: 'perf', emoji: '⚡️', description: '優化性能', emojiText: ':zap:' },
+  { label: 'test', value: 'test', emoji: '✅', description: '增加或更新測試', emojiText: ':white_check_mark:' },
+  { label: 'build', value: 'build', emoji: '🚀', description: '构建系統或外部依賴更改', emojiText: ':rocket:' },
+  { label: 'ci', value: 'ci', emoji: '👷', description: 'CI配置或腳本變動', emojiText: ':construction_worker:' },
+  { label: 'chore', value: 'chore', emoji: '🔧', description: '不影響代碼的其他變動', emojiText: ':wrench:' },
+  { label: 'revert', value: 'revert', emoji: '⏪️', description: '回退之前的版本', emojiText: ':rewind:' },
 ]
 const subjectInput: any = ref(null)
 
+const inExtension = ref(location.protocol === 'chrome-extension:')
 const store = useFormStore()
 store.$subscribe(() => {
   store.saveToLocalStorage()
@@ -159,7 +162,7 @@ const copy = () => {
   const { subject } = store.form
   if (!subject) {
     MessagePlugin.closeAll()
-    MessagePlugin.error('请填写简短描述')
+    MessagePlugin.error('請填寫簡短描述')
     subjectInput.value.focus()
     return
   }
@@ -174,13 +177,17 @@ const copy = () => {
   // 删除textarea元素
   document.body.removeChild(textArea)
 
-  MessagePlugin.success('复制成功')
-  store.clear(false)
+  MessagePlugin.success('複製成功')
+  if (store.copyClear) {
+    store.clear(false)
+  }
   subjectInput.value.focus()
-  if (location.protocol === 'chrome-extension:') {
-    setTimeout(() => {
-      window.close()
-    }, 110)
+  if (inExtension.value) {
+    if (store.autoClose) {
+      setTimeout(() => {
+        window.close()
+      }, 110)
+    }
   }
 }
 // 监听Ctrl+C键
@@ -223,6 +230,9 @@ document.addEventListener('keydown', function (event) {
         flex: 1;
         display: inline-block;
         vertical-align: top;
+      }
+      .checkbox {
+        color: #FFFFFF;
       }
     }
   }
