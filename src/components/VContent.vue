@@ -442,4 +442,8 @@ document.addEventListener('copy', (event: any) => {
     }
   }
 }
+/* 盡量顯示全部type */
+.t-select__dropdown .t-popup__content {
+  max-height: 440px;
+}
 </style>
