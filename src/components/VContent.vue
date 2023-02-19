@@ -5,6 +5,7 @@
         <div class="v-content-wrapper-row-left">
           <t-select
             v-model="store.form.type"
+            filterable
             size="large"
             showArrow
             class="input"
