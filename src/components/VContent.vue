@@ -395,6 +395,7 @@ document.addEventListener('copy', (event: any) => {
       .keyboardInput {
         .editShortcutBtn {
           transition: all 0.3s;
+          width: 30px;
           &.hide {
             width: 0;
             opacity: 0;
@@ -406,6 +407,8 @@ document.addEventListener('copy', (event: any) => {
             width: 30px;
             opacity: unset;
             padding: unset;
+            padding-left: calc(var(--td-comp-paddingLR-l) - 1px);
+            padding-right: calc(var(--td-comp-paddingLR-l) - 1px);
           }
         }
       }
