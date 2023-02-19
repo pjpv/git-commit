@@ -47,7 +47,7 @@
             ref="subjectInput"
             v-model="store.form.subject"
             :clearable="true"
-            placeholder="簡短描述（必填）"
+            :placeholder="`簡短描述（必填）\t\t` + subjectPlaceholder"
             size="large"
             class="input"
           >
@@ -69,7 +69,7 @@
           v-model="store.form.footer"
           :autosize="{ minRows: 3, maxRows: 3 }"
           :clearable="true"
-          placeholder="關聯issue or 不兼容變動（可選）"
+          placeholder="禪道 #1234（可選）"
           size="large"
           class="input"
         />
@@ -140,90 +140,31 @@ import { MessagePlugin } from 'tdesign-vue-next'
 import { useFormStore } from '@/stores/list'
 // const TypeKeys = ['feat', 'fix', 'docs', 'style', 'refactor', 'perf', 'test', 'build', 'ci', 'chore', 'revert']
 const TypeKeys = [
-  {
-    label: 'feat',
-    value: 'feat',
-    emoji: '✨',
-    description: '新功能',
-    emojiText: ':sparkles:',
-  },
-  {
-    label: 'fix',
-    value: 'fix',
-    emoji: '🐛',
-    description: '修復 bug',
-    emojiText: ':bug:',
-  },
-  {
-    label: 'docs',
-    value: 'docs',
-    emoji: '📝',
-    description: '文檔變更',
-    emojiText: ':memo:',
-  },
-  {
-    label: 'style',
-    value: 'style',
-    emoji: '🎨',
-    description: '無關代碼的格式',
-    emojiText: ':art:',
-  },
-  {
-    label: 'refactor',
-    value: 'refactor',
-    emoji: '♻️',
-    description: '重構代碼',
-    emojiText: ':recycle:',
-  },
-  {
-    label: 'perf',
-    value: 'perf',
-    emoji: '⚡️',
-    description: '優化性能',
-    emojiText: ':zap:',
-  },
-  {
-    label: 'test',
-    value: 'test',
-    emoji: '✅',
-    description: '增加或更新測試',
-    emojiText: ':white_check_mark:',
-  },
-  {
-    label: 'build',
-    value: 'build',
-    emoji: '🚀',
-    description: '构建系統或外部依賴更改',
-    emojiText: ':rocket:',
-  },
-  {
-    label: 'ci',
-    value: 'ci',
-    emoji: '👷',
-    description: 'CI配置或腳本變動',
-    emojiText: ':construction_worker:',
-  },
-  {
-    label: 'chore',
-    value: 'chore',
-    emoji: '🔧',
-    description: '不影響代碼的其他變動',
-    emojiText: ':wrench:',
-  },
-  {
-    label: 'revert',
-    value: 'revert',
-    emoji: '⏪️',
-    description: '回退之前的版本',
-    emojiText: ':rewind:',
-  },
+  { label: 'fix', value: 'fix', emoji: '🐛', description: '修復 bug', emojiText: ':bug:', default: '修復', placeholder: '修復模塊A-功能B的問題' },
+  { label: 'feat',value: 'feat', emoji: '✨', description: '新功能/新特性', emojiText: ':sparkles:', default: '新增', placeholder: '新增模塊A 功能B' },
+  { label: 'style', value: 'style', emoji: '💄', description: '樣式相關', emojiText: ':lipstick:', default: '調整', placeholder: '調整頁面A的樣式' },
+  { label: 'docs', value: 'docs', emoji: '📝', description: '文檔變更', emojiText: ':memo:', default: '', placeholder: '更新模塊A-功能B的文檔' },
+  { label: 'chore', value: 'chore', emoji: '🔧', description: '不影響代碼的其他變動', emojiText: ':wrench:', default: '', placeholder: '格式化代碼、删除未使用的代碼或文件' },
+  { label: 'build', value: 'build', emoji: '🚀', description: '构建系統或外部依賴更改', emojiText: ':rocket:', default: '', placeholder: '修復某個構建步驟出現的錯誤' },
+  { label: 'refactor', value: 'refactor', emoji: '♻️', description: '重構代碼/代码格式化', emojiText: ':recycle:', default: '重構', placeholder: '重構某些代碼邏輯，提升了效能' },
+  { label: 'perf', value: 'perf', emoji: '⚡️', description: '優化性能', emojiText: ':zap:', default: '優化', placeholder: '優化功能模塊3的效能表現' },
+  { label: 'test', value: 'test', emoji: '✅', description: '增加或更新測試', emojiText: ':white_check_mark:', default: '', placeholder: '添加功能模塊2的自動化測試用例' },
+  { label: 'ci', value: 'ci', emoji: '👷', description: 'CI配置或腳本變動', emojiText: ':construction_worker:', default: '', placeholder: '更新 CI/CD 流程' },
+  { label: 'revert', value: 'revert', emoji: '⏪️', description: '回退之前的版本', emojiText: ':rewind:', default: '回滾', placeholder: '撤銷上一次提交，恢復了功能模塊4的狀態' },
 ]
 const subjectInput: any = ref(null)
 const keyboardInput: any = ref(null)
 const editShortcutKey = ref(false)
+const subjectPlaceholder = computed(() => {
+  const { type, emoji: emojiType } = store.form
+  let { placeholder } = TypeKeys.find((item) => item.value === type) || {
+    placeholder: '',
+  }
+  return placeholder && '(e.g.) ' + placeholder || ''
+})
 
 onMounted(() => {
-  keyboardInput.value.$el.querySelector('input').classList.add('shortcut-input')
+  keyboardInput.value?.$el?.querySelector('input').classList.add('shortcut-input')
 })
 
 const inExtension = ref(location.protocol === 'chrome-extension:')
@@ -272,6 +213,12 @@ const onReset = () => {
 }
 const onChangeType = (type: string) => {
   subjectInput.value && subjectInput.value.focus()
+  // if (!store.form.subject || TypeKeys.some(i => i.default === store.form.subject)) {
+  //   const typeItem = TypeKeys.find((item) => item.value === type)
+  //   if (typeItem) {
+  //     store.form.subject = typeItem.default
+  //   }
+  // }
 }
 const onClickShortcutKey = () => {
   if (editShortcutKey.value) {
