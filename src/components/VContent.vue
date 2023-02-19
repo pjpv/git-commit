@@ -105,11 +105,11 @@
             auto-width
             placeholder="自定义快捷键"
             size="small"
-            class="input"
+            class="input keyboardInput"
             style="max-width: 190px;"
           >
             <template #suffix>
-              <t-button variant="text" @click="onClickShortcutKey">{{ editShortcutKey ? '保存' : '修改' }}</t-button>
+              <t-button :class="{ editShortcutBtn: true, hide: !editShortcutKey }" variant="text" @click="onClickShortcutKey">{{ editShortcutKey ? '保存' : '修改' }}</t-button>
             </template>
           </t-input>
         </t-space>
@@ -444,6 +444,23 @@ document.addEventListener('copy', (event: any) => {
 
       .checkbox {
         color: #ffffff;
+      }
+      .keyboardInput {
+        .editShortcutBtn {
+          transition: all 0.3s;
+          &.hide {
+            width: 0;
+            opacity: 0;
+            padding: 0;
+          }
+        }
+        &:hover {
+          .editShortcutBtn {
+            width: 30px;
+            opacity: unset;
+            padding: unset;
+          }
+        }
       }
     }
   }
