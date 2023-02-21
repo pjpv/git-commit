@@ -273,7 +273,12 @@ const copy = () => {
   const { subject } = store.form
   if (!subject) {
     MessagePlugin.closeAll()
-    MessagePlugin.error('請填寫簡短描述')
+    // MessagePlugin.error('請填寫簡短描述', 1000)
+    MessagePlugin(
+      'error',
+      { content: '請填寫簡短描述', placement: 'top-right', closeBtn: true },
+      1000
+    )
     subjectInput.value.focus()
     return
   }
@@ -289,7 +294,13 @@ const copy = () => {
   // 删除textarea元素
   document.body.removeChild(textArea)
 
-  MessagePlugin.success('複製成功')
+  MessagePlugin.closeAll()
+  // MessagePlugin('success', { duration: 1000, placement: 'bottom' })
+  MessagePlugin(
+    'success',
+    { content: '複製成功', placement: 'top-right', closeBtn: true },
+    1000
+  )
   // 保存歷史記錄
   store.form.scope && scopeHistories.addItem(store.form.scope)
   if (store.copyClear) {
