@@ -268,7 +268,6 @@ const onDelete = (e: any, option: HistoryItem) => {
 const onClearScopeHistory = () => {
   scopeHistories.clear()
 }
-
 const copy = () => {
   const { subject } = store.form
   if (!subject) {
@@ -276,7 +275,7 @@ const copy = () => {
     // MessagePlugin.error('請填寫簡短描述', 1000)
     MessagePlugin(
       'error',
-      { content: '請填寫簡短描述', placement: 'top-right', closeBtn: true },
+      { content: '請填寫簡短描述', placement: 'top', offset: [0, inExtension.value ? 24 : 46 ], closeBtn: true },
       1000
     )
     subjectInput.value.focus()
@@ -298,7 +297,7 @@ const copy = () => {
   // MessagePlugin('success', { duration: 1000, placement: 'bottom' })
   MessagePlugin(
     'success',
-    { content: '複製成功', placement: 'top-right', closeBtn: true },
+    { content: '複製成功', placement: 'top', offset: [0, inExtension.value ? 270 : 294], closeBtn: true },
     1000
   )
   // 保存歷史記錄
