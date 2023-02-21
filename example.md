@@ -28,6 +28,7 @@
 
 # 示例
 
+
 ## feat (添加新功能, 新特性)
 - 添加新功能
 ```markdown
@@ -95,9 +96,9 @@ docs(comment): 添加代码注释和说明文档
 - 添加了函数和方法的参数和返回值说明
 - 更新了部分代码注释的内容和格式
 ```
-~~
+
 ## style (页面样式)
-~~代码格式修改, 注意不是 css 修改~~ (代碼格式化使用 chore)
+~~原意为代码格式修改, 不是 css 修改~~ (代碼格式化使用 chore)
 
 - 添加新的CSS样式
 ```markdown
@@ -222,29 +223,55 @@ chore(System-A): 优化 Module-B-1 的代码结构和命名规范
 
 | 类型 | 模块 | 动词 | 说明 |
 | ---- | ---- | ---- | ---- |
-| feat | System-A/B | 添加 | 添加了一个新的功能模块 |
-| fix | System-C | 修复 | 修复了一个严重的 bug |
-| style | System-B/Function-1 | 修改 | 修改了模块 B 中功能模块 1 的样式 |
-| refactor | System-C | 重构 | 重构了某些代码逻辑，提升了性能 |
-| test | System-B/Function-2 | 添加 | 添加了功能模块 2 的自动化测试用例 |
-| chore | System-A/B | 更新 | 更新了项目的构建脚本 |
-| perf | System-B/Function-3 | 优化 | 优化了功能模块 3 的性能表现 |
-| ci | System-A | 更新 | 更新了 CI/CD 流程 |
-| build | System-C | 构建 | 修复了某个构建步骤出现的错误 |
-| revert | System-B/Function-4 | 撤销 | 撤销了上一次提交，恢复了功能模块 4 的状态 |
-| init | System-A | 初始化 | 初始化了项目，创建了项目基础结构 |
-| add | System-B | 添加 | 添加了一个新的第三方库 |
-| remove | System-C/Function-5 | 移除 | 移除了不再需要的功能模块 5 |
-| migrate | System-A/B | 迁移 | 将项目从旧的技术栈迁移到了新的技术栈 |
+| feat | System-A/B | 添加 | 添加一个新的功能模块 |
+| fix | System-C | 修复 | 修复一个严重的 bug |
+| style | System-B/Function-1 | 修改 | 修改模块 B 中功能模块 1 的样式 |
+| refactor | System-C | 重构 | 重构某些代码逻辑，提升性能 |
+| test | System-B/Function-2 | 添加 | 添加功能模块 2 的自动化测试用例 |
+| chore | System-A/B | 更新 | 更新项目的构建脚本 |
+| perf | System-B/Function-3 | 优化 | 优化功能模块 3 的性能表现 |
+| ci | System-A | 更新 | 更新 CI/CD 流程 |
+| build | System-C | 构建 | 修复某个构建步骤出现的错误 |
+| revert | System-B/Function-4 | 撤销 | 撤销一次提交，恢复功能模块 4 的状态 |
+| init | System-A | 初始化 | 初始化项目，创建项目基础结构 |
+| add | System-B | 添加 | 添加一个新的第三方库 |
+| remove | System-C/Function-5 | 移除 | 移除不再需要的功能模块 5 |
+| migrate | System-A/B | 迁移 | 将项目从旧的技术栈迁移到新的技术栈 |
 | rename | System-C/Function-6 | 重命名 | 将功能模块 6 重命名为新的名称 |
-| merge | System-A/B | 合并 | 合并了分支，将代码合并到主分支中 |
-| update | System-B | 更新 | 更新了依赖库的版本 |
-| downgrade | System-C | 降级 | 降级了某个依赖库的版本 |
-| optimize | System-A | 优化 | 优化了整个系统的性能表现 |
+| merge | System-A/B | 合并 | 合并分支，将代码合并到主分支中 |
+| update | System-B | 更新 | 更新依赖库的版本 |
+| downgrade | System-C | 降级 | 降级某个依赖库的版本 |
+| optimize | System-A | 优化 | 优化整个系统的性能表现 |
 | fixup | System-C/Function-7 | 修复 | 修复上一个提交的不足之处 |
 | squash | System-B | 合并 | 将多个提交合并成一个提交 |
-| release | System-A | 发布 | 发布了一个新版本 |
-| hotfix | System-C | 修复 | 修复了一个紧急的 bug |
+| release | System-A | 发布 | 发布一个新版本 |
+| hotfix | System-C | 修复 | 修复一个紧急的 bug |
+
+```markdown
+feat(System-A/B): 添加一个新的功能模块
+fix(System-C): 修复一个严重的 bug
+style(System-B/Function-1): 修改模块 B 中功能模块 1 的样式
+refactor(System-C): 重构某些代码逻辑，提升性能
+test(System-B/Function-2): 添加功能模块 2 的自动化测试用例
+chore(System-A/B): 更新项目的构建脚本
+perf(System-B/Function-3): 优化功能模块 3 的性能表现
+ci(System-A): 更新 CI/CD 流程
+build(System-C): 构建修复某个构建步骤出现的错误
+revert(System-B/Function-4): 撤销上一次提交，恢复功能模块 4 的状态
+init(System-A): 初始化项目，创建项目基础结构
+add(System-B): 添加一个新的第三方库
+remove(System-C/Function-5): 移除不再需要的功能模块 5
+migrate(System-A/B): 迁移将项目从旧的技术栈迁移到新的技术栈
+rename(System-C/Function-6): 重命名功能模块 6 为新的名称
+merge(System-A/B): 合并分支，将代码合并到主分支中
+update(System-B): 更新依赖库的版本
+downgrade(System-C): 降级某个依赖库的版本
+optimize(System-A): 优化整个系统的性能表现
+fixup(System-C/Function-7): 修复上一个提交的不足之处
+squash(System-B): 将多个提交合并成一个提交
+release(System-A): 发布一个新版本
+hotfix(System-C): 修复一个紧急的 bug
+```
 
 # Body
 ```markdown
