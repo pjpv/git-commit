@@ -5,6 +5,7 @@ import {
   Button as TButton,
   Dialog as TDialog,
   Input as TInput,
+  AutoComplete as TAutoComplete,
   Textarea as TTextarea,
   Radio as TRadio,
   RadioGroup as TRadioGroup,
@@ -28,6 +29,7 @@ app.use(createPinia())
 app.use(TButton)
 app.use(TDialog)
 app.use(TInput)
+app.use(TAutoComplete)
 app.use(TTextarea)
 app.use(TRadio)
 app.use(TRadioGroup)

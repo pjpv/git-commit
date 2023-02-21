@@ -1,6 +1,7 @@
 <template>
   <div class="v-content">
     <div class="v-content-wrapper">
+      <!-- type & scope -->
       <div class="v-content-wrapper-row">
         <div class="v-content-wrapper-row-left">
           <t-select
@@ -20,16 +21,35 @@
           </t-select>
         </div>
         <div class="v-content-wrapper-row-right">
-          <t-input
+          <!--<t-input-->
+          <!--  v-model="store.form.scope"-->
+          <!--  placeholder="影響範圍（可選）"-->
+          <!--  :clearable="true"-->
+          <!--  size="large"-->
+          <!--  class="input"-->
+          <!--&gt;-->
+          <!--</t-input>-->
+          <t-auto-complete
             v-model="store.form.scope"
-            placeholder="影響範圍（可選）"
-            :clearable="true"
+            :options="scopeOptions"
+            :popup-props="{ overlayClassName: 't-scope-autocomplete-option-list' }"
+            clearable
             size="large"
-            class="input"
+            placeholder="影響範圍（可選）"
           >
-          </t-input>
+            <template #option="{ option }">
+              <div class="form-scope-option">
+                <small class="form-scope-option-text">{{ option.text }}</small>
+                <CloseCircleFilledIcon class="form-scope-option-btn" name="close" @click="(e) => onDelete(e, option)" />
+              </div>
+            </template>
+            <template v-if="scopeOptions.length" #panelBottomContent>
+              <t-button variant="text" style="width: 100%;margin: 4px 0;" @click="onClearScopeHistory">清空</t-button>
+            </template>
+          </t-auto-complete>
         </div>
       </div>
+      <!-- subject -->
       <div class="v-content-wrapper-row">
         <!--<div class="v-content-wrapper-row-left">-->
         <!--  <t-select-->
@@ -54,6 +74,7 @@
           </t-input>
         </div>
       </div>
+      <!-- body -->
       <div class="v-content-wrapper-row">
         <t-textarea
           v-model="store.form.body"
@@ -64,6 +85,7 @@
           class="input"
         />
       </div>
+      <!-- footer -->
       <div class="v-content-wrapper-row">
         <t-textarea
           v-model="store.form.footer"
@@ -120,6 +142,7 @@
         </t-space>
       </div>
     </div>
+    <!-- Preview -->
     <div class="v-content-wrapper preview" style="">
       <div class="v-content-wrapper-row">
         <t-textarea
@@ -137,7 +160,9 @@
 <script setup lang="ts">
 import { ref, toRefs, createVNode, nextTick, computed, onMounted } from 'vue'
 import { MessagePlugin } from 'tdesign-vue-next'
+import { CloseCircleFilledIcon } from 'tdesign-icons-vue-next';
 import { useFormStore } from '@/stores/list'
+import {HistoryItem, useHistoryStore} from '@/stores/history'
 // const TypeKeys = ['feat', 'fix', 'docs', 'style', 'refactor', 'perf', 'test', 'build', 'ci', 'chore', 'revert']
 const TypeKeys = [
   { label: 'fix', value: 'fix', emoji: '🐛', description: '修復 bug', emojiText: ':bug:', default: '修復', placeholder: '修復模塊A-功能B的問題' },
@@ -172,6 +197,16 @@ const store = useFormStore()
 store.$subscribe(() => {
   store.saveToLocalStorage()
 })
+
+const scopeHistories = useHistoryStore()
+const scopeOptions = computed(() => {
+  const { histories } = scopeHistories
+  const text = store.form.scope?.toLowerCase() || ''
+  return histories.filter(i => i.text.toLowerCase().includes(text)).sort((a, b) => b.count - a.count)
+})
+// for (let i = 0; i < 10; i++) {
+//   scopeHistories.addItem(`scope${i}`)
+// }
 
 const shortcutKey = ref(JSON.parse(JSON.stringify(store.shortcutKey)))
 
@@ -213,12 +248,6 @@ const onReset = () => {
 }
 const onChangeType = (type: string) => {
   subjectInput.value && subjectInput.value.focus()
-  // if (!store.form.subject || TypeKeys.some(i => i.default === store.form.subject)) {
-  //   const typeItem = TypeKeys.find((item) => item.value === type)
-  //   if (typeItem) {
-  //     store.form.subject = typeItem.default
-  //   }
-  // }
 }
 const onClickShortcutKey = () => {
   if (editShortcutKey.value) {
@@ -230,6 +259,14 @@ const onClickShortcutKey = () => {
       keyboardInput.value.$el.querySelector('input').focus()
     }, 0)
   }
+}
+const onDelete = (e: any, option: HistoryItem) => {
+  e.e.preventDefault()
+  e.e.stopPropagation()
+  scopeHistories.removeItem(option.text)
+}
+const onClearScopeHistory = () => {
+  scopeHistories.clear()
 }
 
 const copy = () => {
@@ -253,6 +290,8 @@ const copy = () => {
   document.body.removeChild(textArea)
 
   MessagePlugin.success('複製成功')
+  // 保存歷史記錄
+  store.form.scope && scopeHistories.addItem(store.form.scope)
   if (store.copyClear) {
     store.clear(false)
   }
@@ -415,6 +454,30 @@ document.addEventListener('copy', (event: any) => {
     }
   }
 }
+
+.form-scope-option {
+  width: 100%;
+  &-text {
+    font-size: 16px;
+    vertical-align: middle;
+    line-height: 26px;
+  }
+  &-btn {
+    font-size: 20px;
+    float: right;
+    vertical-align: middle;
+    line-height: 26px;
+    height: 22px;
+    width: 22px;
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.4);
+    transition: color 0.3s;
+    &:hover {
+      //opacity: 0.7;
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+}
 </style>
 
 <style lang="less">
@@ -448,5 +511,15 @@ document.addEventListener('copy', (event: any) => {
 /* 盡量顯示全部type */
 .t-select__dropdown .t-popup__content {
   max-height: 440px;
+}
+// 不需要顯示太多
+.t-scope-autocomplete-option-list {
+  .t-popup__content {
+    max-height: 180px;
+  }
+}
+// 清除按鈕放大
+.t-input.t-input--suffix:hover > span.t-input__clear {
+  font-size: 20px;
 }
 </style>
