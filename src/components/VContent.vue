@@ -160,9 +160,9 @@
 <script setup lang="ts">
 import { ref, toRefs, createVNode, nextTick, computed, onMounted } from 'vue'
 import { MessagePlugin } from 'tdesign-vue-next'
-import { CloseCircleFilledIcon, HelpCircleFilledIcon } from 'tdesign-icons-vue-next';
+import { CloseCircleFilledIcon } from 'tdesign-icons-vue-next';
 import { useFormStore } from '@/stores/list'
-import {HistoryItem, useHistoryStore} from '@/stores/history'
+import { type HistoryItem, useHistoryStore} from '@/stores/history'
 // const TypeKeys = ['feat', 'fix', 'docs', 'style', 'refactor', 'perf', 'test', 'build', 'ci', 'chore', 'revert']
 const TypeKeys = [
   { label: 'fix', value: 'fix', emoji: '🐛', description: '修復 bug', emojiText: ':bug:', default: '修復', placeholder: '修復模塊A-功能B的問題' },
