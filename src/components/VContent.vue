@@ -294,8 +294,8 @@ const copy = () => {
   store.form.scope && scopeHistories.addItem(store.form.scope)
   if (store.copyClear) {
     store.clear(false)
+    subjectInput.value.focus()
   }
-  subjectInput.value.focus()
   if (inExtension.value) {
     if (store.autoClose) {
       setTimeout(() => {
