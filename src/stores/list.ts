@@ -26,7 +26,7 @@ export const useFormStore = defineStore('form', () => {
   const STORE_COPY_CLEAR_KEY = 'git-commit-form-copy-clear'
   const STORE_SHORTCUT_KEY = 'git-commit-form-shortcut-key'
   const form = ref({
-    type: 'feat',
+    type: 'fix',
     scope: '',
     subject: '',
     body: '',
@@ -115,7 +115,7 @@ export const useFormStore = defineStore('form', () => {
   }
   const clear = (resetType = true) => {
     form.value = {
-      type: resetType ? 'feat' : form.value.type,
+      type: resetType ? 'fix' : form.value.type,
       scope: '',
       subject: '',
       body: '',
