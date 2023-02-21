@@ -43,9 +43,9 @@
                 <CloseCircleFilledIcon class="form-scope-option-btn" name="close" @click="(e) => onDelete(e, option)" />
               </div>
             </template>
-            <template v-if="scopeOptions.length" #panelBottomContent>
-              <t-button variant="text" style="width: 100%;margin: 4px 0;" @click="onClearScopeHistory">清空</t-button>
-            </template>
+            <!--<template v-if="scopeOptions.length" #panelBottomContent>-->
+            <!--  <t-button variant="text" style="width: 100%;margin: 4px 0;" @click="onClearScopeHistory">清空</t-button>-->
+            <!--</template>-->
           </t-auto-complete>
         </div>
       </div>
