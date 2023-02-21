@@ -160,7 +160,7 @@
 <script setup lang="ts">
 import { ref, toRefs, createVNode, nextTick, computed, onMounted } from 'vue'
 import { MessagePlugin } from 'tdesign-vue-next'
-import { CloseCircleFilledIcon } from 'tdesign-icons-vue-next';
+import { CloseCircleFilledIcon, HelpCircleFilledIcon } from 'tdesign-icons-vue-next';
 import { useFormStore } from '@/stores/list'
 import {HistoryItem, useHistoryStore} from '@/stores/history'
 // const TypeKeys = ['feat', 'fix', 'docs', 'style', 'refactor', 'perf', 'test', 'build', 'ci', 'chore', 'revert']
@@ -358,6 +358,16 @@ window.addEventListener('keydown', function (e: any) {
       && altKey === store.shortcutKey.altKey
       && metaKey === store.shortcutKey.metaKey
       && keyCode === store.shortcutKey.keyCode) {
+
+      if (/Macintosh|MacIntel|MacPPC/.test(navigator.userAgent)) {
+        if (keyCode == 67 && metaKey) {
+          if (isInput()) return console.log('正在複製輸入框內容1'), true
+        }
+      } else {
+        if (keyCode == 67 && ctrlKey) {
+          if (isInput()) return console.log('正在複製輸入框內容2'), true
+        }
+      }
       waitKeyUp = true
       console.log('触发快捷键')
       copy()
@@ -369,6 +379,13 @@ window.addEventListener('keydown', function (e: any) {
   //   copy()
   // }
 })
+const isInput = () => {
+  const dom: any = document.activeElement
+  if (!dom) return false
+  const tag = dom.tagName.toLowerCase()
+  if (tag !== 'input' && tag !== 'textarea') return false
+  return dom.selectionStart !== dom.selectionEnd
+}
 window.addEventListener('keyup', function (e: any) {
   // 获取用户按下的键码和修饰键
   const { shiftKey, ctrlKey, altKey, metaKey } = e
@@ -386,6 +403,7 @@ document.addEventListener('copy', (event: any) => {
   ) {
     return
   }
+  if (isInput()) return console.log('正在複製輸入框內容3'), true
   event.preventDefault()
 })
 </script>
