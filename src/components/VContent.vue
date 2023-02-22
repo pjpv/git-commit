@@ -31,7 +31,7 @@
           <!--</t-input>-->
           <t-auto-complete
             v-model="store.form.scope"
-            :options="scopeOptions"
+            :options="scopeHistories.histories"
             :popup-props="{ overlayClassName: 't-scope-autocomplete-option-list' }"
             clearable
             size="large"
@@ -199,11 +199,6 @@ store.$subscribe(() => {
 })
 
 const scopeHistories = useHistoryStore()
-const scopeOptions = computed(() => {
-  const { histories } = scopeHistories
-  const text = store.form.scope?.toLowerCase() || ''
-  return histories.filter(i => i.text.toLowerCase().includes(text)).sort((a, b) => b.count - a.count)
-})
 // for (let i = 0; i < 10; i++) {
 //   scopeHistories.addItem(`scope${i}`)
 // }
