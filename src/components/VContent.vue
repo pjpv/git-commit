@@ -193,6 +193,7 @@ onMounted(() => {
 })
 
 const inExtension = ref(location.protocol === 'chrome-extension:')
+const isMac = /Macintosh|MacIntel|MacPPC/.test(navigator.userAgent)
 const store = useFormStore()
 store.$subscribe(() => {
   store.saveToLocalStorage()
@@ -364,7 +365,7 @@ window.addEventListener('keydown', function (e: any) {
       && metaKey === store.shortcutKey.metaKey
       && keyCode === store.shortcutKey.keyCode) {
 
-      if (/Macintosh|MacIntel|MacPPC/.test(navigator.userAgent)) {
+      if (isMac) {
         if (keyCode == 67 && metaKey) {
           if (isInput()) return console.log('正在複製輸入框內容1'), true
         }
@@ -396,8 +397,14 @@ window.addEventListener('keyup', function (e: any) {
   const { shiftKey, ctrlKey, altKey, metaKey } = e
   const keyCode = e.keyCode || e.which
   console.log('keyup', keyCode, ctrlKey, altKey, shiftKey, metaKey)
-  if (waitKeyUp && store.shortcutKey.keyCode === keyCode) {
-    waitKeyUp = false
+  if (waitKeyUp) {
+    if (isMac && keyCode === 91) {
+      waitKeyUp = false
+      console.log('等待按鍵1', waitKeyUp)
+    } else if (store.shortcutKey.keyCode === keyCode) {
+      waitKeyUp = false
+      console.log('等待按鍵2', waitKeyUp)
+    }
   }
 })
 document.addEventListener('copy', (event: any) => {
