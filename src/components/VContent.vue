@@ -190,6 +190,14 @@ const subjectPlaceholder = computed(() => {
 
 onMounted(() => {
   keyboardInput.value?.$el?.querySelector('input').classList.add('shortcut-input')
+  onChangeType('')
+
+  // 禁止tab键
+  document.querySelectorAll('textarea[readonly],input[disabled],input[readonly],button,input[type="checkbox"]').forEach(i => {
+    const typ2=document.createAttribute("tabindex")
+    typ2.nodeValue = "-1"
+    i.attributes.setNamedItem(typ2)
+  })
 })
 
 const inExtension = ref(location.protocol === 'chrome-extension:')
