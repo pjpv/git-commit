@@ -1,20 +1,29 @@
 {
-   "browser_action": {
-      "default_icon": "icon32.png",
-      "default_popup": "index.html",
-      "default_title": "Git Commit"
-   },
-   "content_scripts": [ ],
-   "description": "Git Commit",
-   "icons": {
-      "16": "icon32.png",
-      "32": "icon32.png",
-      "48": "icon32.png",
-      "128": "icon32.png"
-   },
-   "manifest_version": 2,
-   "name": "Git Commit",
-   "permissions": [],
-   "version": "0.1.0",
-   "web_accessible_resources": []
+  "action": {
+    "default_icon": "icon32.png",
+    "default_popup": "index.html",
+    "default_title": "Git Commit"
+  },
+  "content_scripts": [],
+  "description": "Git Commit",
+  "icons": {
+    "16": "icon32.png",
+    "32": "icon32.png",
+    "48": "icon32.png",
+    "128": "icon32.png"
+  },
+  "manifest_version": 3,
+  "name": "Git Commit",
+  "permissions": ["tabs"],
+  "version": "0.1.0",
+  "web_accessible_resources": [],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+C",
+        "mac": "Alt+Shift+C"
+      },
+      "description": "Git Commit"
+    }
+  }
 }

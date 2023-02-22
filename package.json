@@ -21,6 +21,7 @@
   "devDependencies": {
     "@playwright/test": "^1.30.0",
     "@rushstack/eslint-patch": "^1.1.4",
+    "@types/chrome": "^0.0.217",
     "@types/jsdom": "^20.0.1",
     "@types/node": "^18.11.12",
     "@vitejs/plugin-vue": "^4.0.0",

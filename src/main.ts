@@ -17,6 +17,7 @@ import {
   FormItem as TFormItem,
   Select as TSelect,
   Option as TOption,
+  Tooltip as TTooltip,
 } from 'tdesign-vue-next'
 import App from './App.vue'
 
@@ -41,6 +42,7 @@ app.use(TForm)
 app.use(TFormItem)
 app.use(TSelect)
 app.use(TOption)
+app.use(TTooltip)
 // app.use(TDesign)
 
 app.mount('#app')
