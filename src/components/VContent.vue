@@ -140,6 +140,9 @@
           <t-tooltip v-else :delay="50" content="下載Chrome擴展" theme="">
             <DownloadIcon class="setting-btn" @click="onDownload"/>
           </t-tooltip>
+          <t-tooltip v-if="inExtension" :delay="50" content="文档 示例" theme="">
+            <HelpCircleIcon class="setting-btn" @click="onReadme"/>
+          </t-tooltip>
         </t-space>
 
         <t-space style="float: right">
@@ -159,7 +162,7 @@
           class="input"
         />
       </div>
-      <div class="v-content-wrapper-readme">
+      <div v-if="!inExtension" class="v-content-wrapper-readme">
         <div class="readme-btn" @click="onReadme"> 文档 示例 </div>
       </div>
     </div>
@@ -170,7 +173,7 @@
 /// <reference types="chrome" />
 import { ref, toRefs, createVNode, nextTick, computed, onMounted } from 'vue'
 import { MessagePlugin } from 'tdesign-vue-next'
-import { CloseCircleFilledIcon, SettingIcon, DownloadIcon } from 'tdesign-icons-vue-next';
+import { CloseCircleFilledIcon, SettingIcon, DownloadIcon, HelpCircleIcon } from 'tdesign-icons-vue-next';
 import { useFormStore } from '@/stores/list'
 import { type HistoryItem, useHistoryStore} from '@/stores/history'
 // const TypeKeys = ['feat', 'fix', 'docs', 'style', 'refactor', 'perf', 'test', 'build', 'ci', 'chore', 'revert']
