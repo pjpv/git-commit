@@ -159,6 +159,9 @@
           class="input"
         />
       </div>
+      <div class="v-content-wrapper-readme">
+        <div class="readme-btn" @click="onReadme"> 文档 示例 </div>
+      </div>
     </div>
   </div>
 </template>
@@ -273,6 +276,9 @@ const onClickShortcutKey = () => {
 }
 const onSetting = () => {
   chrome.tabs.create({ url: 'chrome://extensions/shortcuts' })
+}
+const onReadme = () => {
+  window.open('https://github.com/pjpv/git-commit/blob/main/example-zh-Hant.md#%E7%B0%A1%E4%BB%8B', '_blank')
 }
 const onDownload = () => {
   const url = './git-commit-extension.zip'
@@ -453,7 +459,7 @@ document.addEventListener('copy', (event: any) => {
 
   &-wrapper {
     display: block;
-    background: rgba(245, 245, 245, 0.1);
+    background: rgba(245, 245, 245, 0.2);
     padding: 20px;
     box-shadow: 1px 2px 7px #0000006b;
     border-radius: 6px;
@@ -510,6 +516,46 @@ document.addEventListener('copy', (event: any) => {
       }
       .setting-btn {
         cursor: pointer;
+      }
+    }
+    &-readme {
+      text-align: right;
+      .readme-btn {
+        text-align: center;
+        color: #FFFFFF;
+        padding: 0 10px;
+        line-height: 1.5;
+        cursor: pointer;
+        transition: all 0.3s;
+        overflow: hidden;
+        position: relative;
+        display: inline-block;
+        margin-left: auto;
+        &:before, &:after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          width: 0;
+          height: 1px;
+          background: #FFFFFF;
+          transition: all 0.2s;
+        }
+        &:before {
+          left: 50%;
+          width: 0;
+        }
+        &:after {
+          left: 50%;
+        }
+        &:hover {
+          &:before {
+            width: 50%;
+            left: 0;
+          }
+          &:after {
+            width: 50%;
+          }
+        }
       }
     }
   }
