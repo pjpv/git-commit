@@ -8,7 +8,8 @@ export interface GitCommitForm {
   subject: string
   body: string
   footer: string
-  emoji: string
+  emoji: string,
+  zentao: string[]
 }
 export interface ShortcutKey {
   altKey: boolean
@@ -32,6 +33,7 @@ export const useFormStore = defineStore('form', () => {
     body: '',
     footer: '',
     emoji: 'symbol',
+    zentao: [],
   } as GitCommitForm)
   const style = ref('1')
   const autoClose = ref(true)
@@ -56,7 +58,11 @@ export const useFormStore = defineStore('form', () => {
     try {
       const data = localStorage.getItem(STORE_KEY)
       if (data) {
-        form.value = JSON.parse(data)
+        const obj = JSON.parse(data)
+        if (!obj.zentao || Array.isArray(!obj.zentao)) {
+          obj.zentao = []
+        }
+        form.value = obj
       }
     } catch (e) {
       console.error(e)
@@ -121,6 +127,7 @@ export const useFormStore = defineStore('form', () => {
       body: '',
       footer: '',
       emoji: form.value.emoji || 'symbol',
+      zentao: [],
     }
     saveToLocalStorage()
   }

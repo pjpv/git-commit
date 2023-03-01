@@ -86,12 +86,21 @@
         />
       </div>
       <!-- footer -->
+      <div class="zentao">
+        <t-tagInput
+          v-model="store.form.zentao"
+          :tag-props="{ }"
+          clearable
+          dragSort class="input"
+          placeholder="禪道ID（可選）	&emsp;&emsp;1234 (回車確認)"
+          size="large" />
+      </div>
       <div class="v-content-wrapper-row">
         <t-textarea
           v-model="store.form.footer"
           :autosize="{ minRows: 3, maxRows: 3 }"
           :clearable="true"
-          placeholder="禪道 #1234（可選）"
+          placeholder="Footer（可選）&#13;&#10;當前代碼與上一個版本不兼容變動：BREAKING CHANGE: 變動的描述、以及變動理由和遷移方法"
           size="large"
           class="input"
         />
@@ -140,7 +149,7 @@
           <t-tooltip v-else :delay="50" content="下載Chrome擴展" theme="">
             <DownloadIcon class="setting-btn" @click="onDownload"/>
           </t-tooltip>
-          <t-tooltip v-if="inExtension" :delay="50" content="文档 示例" theme="">
+          <t-tooltip v-if="inExtension" :delay="50" content="文檔 示例" theme="">
             <HelpCircleIcon class="setting-btn" @click="onReadme"/>
           </t-tooltip>
         </t-space>
@@ -163,7 +172,7 @@
         />
       </div>
       <div v-if="!inExtension" class="v-content-wrapper-readme">
-        <div class="readme-btn" @click="onReadme"> 文档 示例 </div>
+        <div class="readme-btn" @click="onReadme"> 文檔 示例 </div>
       </div>
     </div>
   </div>
@@ -184,6 +193,7 @@ const TypeKeys = [
   { label: 'docs', value: 'docs', emoji: '📝', description: '文檔變更', emojiText: ':memo:', default: '', placeholder: '更新模塊A-功能B的文檔' },
   { label: 'chore', value: 'chore', emoji: '🔧', description: '不影響代碼的其他變動', emojiText: ':wrench:', default: '', placeholder: '格式化代碼、删除未使用的代碼或文件' },
   { label: 'build', value: 'build', emoji: '🚀', description: '构建系統或外部依賴更改', emojiText: ':rocket:', default: '', placeholder: '修復某個構建步驟出現的錯誤' },
+  { label: 'hotfix', value: 'hotfix', emoji: '🚑️', description: '緊急修復', emojiText: ':ambulance:', default: '', placeholder: '緊急修復已發佈版本的嚴重問題' },
   { label: 'refactor', value: 'refactor', emoji: '♻️', description: '重構代碼/代码格式化', emojiText: ':recycle:', default: '重構', placeholder: '重構某些代碼邏輯，提升了效能' },
   { label: 'perf', value: 'perf', emoji: '⚡️', description: '優化性能', emojiText: ':zap:', default: '優化', placeholder: '優化功能模塊3的效能表現' },
   { label: 'test', value: 'test', emoji: '✅', description: '增加或更新測試', emojiText: ':white_check_mark:', default: '', placeholder: '添加功能模塊2的自動化測試用例' },
@@ -228,7 +238,7 @@ const scopeHistories = useHistoryStore()
 const shortcutKey = ref(JSON.parse(JSON.stringify(store.shortcutKey)))
 
 const preview = computed(() => {
-  const { type, scope, emoji: emojiType, subject, body, footer } = store.form
+  const { type, scope, emoji: emojiType, subject, body, footer, zentao } = store.form
   let typeItem = TypeKeys.find((item) => item.value === type) || {
     emoji: '',
     emojiText: '',
@@ -258,6 +268,8 @@ const preview = computed(() => {
   }
   return `${header} ${subject}${body ? '\n\n' + body : ''}${
     footer ? '\n\n' + footer : ''
+  }${
+    zentao && zentao.length ? '\n\n禪道 ' + zentao.map(i => '#' + i).join(' ') : ''
   }`
 })
 const onReset = () => {
@@ -628,7 +640,19 @@ document.addEventListener('copy', (event: any) => {
   }
 }
 // 清除按鈕放大
-.t-input.t-input--suffix:hover > span.t-input__clear {
-  font-size: 20px;
+.t-input.t-input--suffix:hover {
+  > span.t-input__clear, .t-tag-input__suffix-clear {
+    font-size: 20px;
+  }
+}
+.zentao {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin-bottom: 10px;
+  &-label {
+    width: 55px;
+  }
 }
 </style>
