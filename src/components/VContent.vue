@@ -88,19 +88,23 @@
       <!-- footer -->
       <div class="zentao">
         <t-tagInput
+          ref="zentaoInput"
           v-model="store.form.zentao"
+          v-model:input-value="tagText"
           :tag-props="{ }"
           clearable
           dragSort class="input"
           placeholder="禪道ID（可選）	&emsp;&emsp;1234 (回車確認)"
-          size="large" />
+          size="large"
+          :onInputChange="onZentaoInputChange"
+        />
       </div>
       <div class="v-content-wrapper-row">
         <t-textarea
           v-model="store.form.footer"
           :autosize="{ minRows: 3, maxRows: 3 }"
           :clearable="true"
-          placeholder="Footer（可選）&#13;&#10;當前代碼與上一個版本不兼容變動：BREAKING CHANGE: 變動的描述、以及變動理由和遷移方法"
+          placeholder="Footer（可選）&#13;&#10;不兼容變動&#13;&#10;相關鏈接"
           size="large"
           class="input"
         />
@@ -201,6 +205,7 @@ const TypeKeys = [
   { label: 'revert', value: 'revert', emoji: '⏪️', description: '回退之前的版本', emojiText: ':rewind:', default: '回滾', placeholder: '撤銷上一次提交，恢復了功能模塊4的狀態' },
 ]
 const subjectInput: any = ref(null)
+const zentaoInput: any = ref(null)
 const keyboardInput: any = ref(null)
 const editShortcutKey = ref(false)
 const subjectPlaceholder = computed(() => {
@@ -229,6 +234,7 @@ const store = useFormStore()
 store.$subscribe(() => {
   store.saveToLocalStorage()
 })
+const tagText = ref('')
 
 const scopeHistories = useHistoryStore()
 // for (let i = 0; i < 10; i++) {
@@ -312,6 +318,13 @@ const onDelete = (e: any, option: HistoryItem) => {
 const onClearScopeHistory = () => {
   scopeHistories.clear()
 }
+
+const onZentaoInputChange = (val: string) => {
+  const v = val.replace(/[^0-9]/g, '')
+  if (v !== val) {
+    tagText.value = v
+  }
+}
 const copy = () => {
   const { subject } = store.form
   if (!subject) {
@@ -323,6 +336,17 @@ const copy = () => {
       1000
     )
     subjectInput.value.focus()
+    return
+  }
+  if (tagText.value) {
+    MessagePlugin.closeAll()
+    // MessagePlugin.error('請填寫簡短描述', 1000)
+    MessagePlugin(
+      'warning',
+      { content: '禪道ID未回車確認', placement: 'top', offset: [0, inExtension.value ? 24 : 46 ], closeBtn: true },
+      1000
+    )
+    zentaoInput.value?.$el?.querySelector('input')?.focus()
     return
   }
   // 创建一个新的textarea元素，设置文本并添加到页面中
