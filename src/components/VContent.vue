@@ -660,7 +660,7 @@ document.addEventListener('copy', (event: any) => {
 // 不需要顯示太多
 .t-scope-autocomplete-option-list {
   .t-popup__content {
-    max-height: 180px;
+    max-height: 440px;
   }
 }
 // 清除按鈕放大
