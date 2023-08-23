@@ -98,7 +98,7 @@
           size="large"
           :onInputChange="onZentaoInputChange"
         />
-        <t-button variant="base" theme="default" size="large" style="margin-left: 10px;" @click="onClickCurrentTagBugId">當前BUG ({{ currentPageZenTaoId }})</t-button>
+        <t-button variant="base" theme="default" size="large" style="margin-left: 10px;" @click="onClickCurrentTagBugId">當前BUG ({{ currentPageZenTaoId || '-' }})</t-button>
       </div>
       <div class="v-content-wrapper-row">
         <t-textarea
@@ -250,7 +250,7 @@ if (inExtension.value) {
   })
 }
 const onClickCurrentTagBugId = () => {
-  if (inExtension.value) {
+  if (inExtension.value && currentPageZenTaoId.value) {
     store.form.zentao = [currentPageZenTaoId.value]
   }
 }
