@@ -98,6 +98,7 @@
           size="large"
           :onInputChange="onZentaoInputChange"
         />
+        <t-button variant="base" theme="default" size="large" style="margin-left: 10px;" @click="onClickCurrentTagBugId">當前BUG ({{ currentPageZenTaoId }})</t-button>
       </div>
       <div class="v-content-wrapper-row">
         <t-textarea
@@ -215,7 +216,6 @@ const subjectPlaceholder = computed(() => {
   }
   return placeholder && '(e.g.) ' + placeholder || ''
 })
-
 onMounted(() => {
   keyboardInput.value?.$el?.querySelector('input').classList.add('shortcut-input')
   onChangeType('')
@@ -235,6 +235,25 @@ store.$subscribe(() => {
   store.saveToLocalStorage()
 })
 const tagText = ref('')
+
+
+let currentPageZenTaoId = ref('')
+const zentaoIdRegex = /\/zentao\/bug-view-(\d+).html/
+if (inExtension.value) {
+  chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+    const currentTabUrl = tabs[0].url;
+    if (!currentTabUrl) return
+    const match = currentTabUrl.match(zentaoIdRegex)
+    if (match) {
+      currentPageZenTaoId.value = match[1]
+    }
+  })
+}
+const onClickCurrentTagBugId = () => {
+  if (inExtension.value) {
+    store.form.zentao = [currentPageZenTaoId.value]
+  }
+}
 
 const scopeHistories = useHistoryStore()
 // for (let i = 0; i < 10; i++) {
